@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  font-family: "Montserrat", sans-serif;
+}
+body {
+  @apply text-gray-700 bg-black;
+}
+.formdecoration {
+  @apply bg-white rounded-md py-2 px-3 outline-none;
+}
+.inputForm {
+  @apply p-5 outline-none border rounded-md text-lg;
+}
+
+.ga{
+  color: #fff;
+  text-shadow: 0 0 7px #a4a4a4, 0 0 10px #a4a4a4, 0 0 21px #a4a4a4, 0 0 7px #a4a4a4,
+    0 0 10px #a4a4a4, 0 0 21px #a4a4a4
+}
+.vip{
+  color: rgb(249 115 22);
+  text-shadow: 0 0 2px #cf4b4b, 0 0 10px #cf4b4b, 0 0 10px #cf4b4b, 0 0 5px #cf4b4b,
+    0 0 5px #cf4b4b, 0 0 10px #cf4b4b
+}
+.vvip {
+  color: rgb(27, 82, 106);
+  text-shadow: 0 0 2px rgb(0, 179, 255), 0 0 10px rgb(0, 179, 255), 0 0 10px rgb(0, 179, 255), 0 0 5px rgb(0, 179, 255),
+    0 0 5px rgb(0, 179, 255), 0 0 10px rgb(0, 179, 255)
+}
+.price{
+  color: #fff;
+  text-shadow: 0 0 7px #de0a0a, 0 0 10px #de0a0a, 0 0 21px #de0a0a, 0 0 7px #de0a0a,
+    0 0 10px #de0a0a, 0 0 21px #de0a0a
+}
