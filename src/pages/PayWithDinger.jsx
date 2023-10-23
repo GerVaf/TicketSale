@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const Final = () => {
+const PayWithDinger = () => {
   const data = useSelector((store) => store?.data?.data);
   console.log(data);
   return (
@@ -35,4 +35,4 @@ const Final = () => {
   );
 };
 
-export default Final;
+export default PayWithDinger;

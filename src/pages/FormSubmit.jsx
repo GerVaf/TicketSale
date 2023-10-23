@@ -278,7 +278,7 @@ const FormSubmit = ({ refresh, setRefresh }) => {
             </div>
 
             <button
-            onClick={()=>{nav('/final');dispatch(addData(formData))}}
+            onClick={()=>{nav('/final-confirm');dispatch(addData(formData))}}
               className="bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 from-blue-500 to-blue-700 rounded-md py-3 text-white font-bold"
               type="submit"
             >

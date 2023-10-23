@@ -3,10 +3,10 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import FormSubmit from "./pages/FormSubmit";
 import DataTable from "./pages/DataTable";
-import TicketPackage from "./pages/TicketPackage";
 import { Toaster } from "react-hot-toast";
 import Payments from "./pages/Payments";
-import Final from "./pages/Final";
+import PayWithDinger from "./pages/PayWithDinger";
+import FinalConfirm from "./pages/FinalConfirm";
 
 const App = () => {
   const [refresh, setRefresh] = useState(false);
@@ -17,7 +17,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/payments" element={<Payments />} />
-        <Route path="/final" element={<Final />} />
+        <Route path="/paywithdinger" element={<PayWithDinger />} />
+        <Route path="/final-confirm" element={<FinalConfirm />} />
         <Route
           path="/form-submit"
           element={<FormSubmit refresh={refresh} setRefresh={setRefresh} />}
