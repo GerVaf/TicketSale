@@ -85,7 +85,7 @@ const FormSubmit = ({ refresh, setRefresh }) => {
       <div className="flex flex-col lg:w-[900px] gap-5">
         {/* top form side  */}
         <div className="bg-slate-50 p-5 rounded-md">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form className="flex flex-col gap-5">
             {/* Personal info  */}
             <div className="flex flex-col gap-5">
               <label
