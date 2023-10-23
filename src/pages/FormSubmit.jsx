@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { addData } from "../Global/FormSlice";
 const FormSubmit = ({ refresh, setRefresh }) => {
   // Get Ticket Detail
   const detail = useSelector((store) => store?.ticket?.ticketDetail);
@@ -12,13 +13,13 @@ const FormSubmit = ({ refresh, setRefresh }) => {
   const [total, setTotal] = useState(0);
   const nav = useNavigate();
   const [errorMessages, setErrorMessages] = useState();
-
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     accname: "",
     phone: "",
     email: "",
-    payment_type: "",
-    transactionid: "",
+    // payment_type: "",
+    // transactionid: "",
     ticketid: detail?._id,
     plus_person: null,
     tick_quantity: null,
@@ -127,7 +128,7 @@ const FormSubmit = ({ refresh, setRefresh }) => {
                 value={formData.phone}
                 onChange={handleChange}
               />
-              <input
+              {/* <input
                 required
                 placeholder="Transaction number"
                 className="inputForm"
@@ -136,7 +137,7 @@ const FormSubmit = ({ refresh, setRefresh }) => {
                 name="transactionid"
                 value={formData.transactionid}
                 onChange={handleChange}
-              />
+              /> */}
               <input
                 required
                 placeholder="Your email"
@@ -208,7 +209,7 @@ const FormSubmit = ({ refresh, setRefresh }) => {
             </div>
 
             {/* Payment _type */}
-            <div className="flex flex-col gap-5">
+            {/* <div className="flex flex-col gap-5">
               <label
                 className="text-xl font-bold text-end"
                 htmlFor="payment_type"
@@ -253,7 +254,7 @@ const FormSubmit = ({ refresh, setRefresh }) => {
                   <label htmlFor="payment_type_kbzpay">KBZ Pay</label>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Terms and Conditions */}
             <div className="flex gap-5">
@@ -277,6 +278,7 @@ const FormSubmit = ({ refresh, setRefresh }) => {
             </div>
 
             <button
+            onClick={()=>{nav('/final');dispatch(addData(formData))}}
               className="bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 from-blue-500 to-blue-700 rounded-md py-3 text-white font-bold"
               type="submit"
             >
