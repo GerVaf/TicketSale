@@ -65,7 +65,6 @@ const FinalConfirm = () => {
       if (response.status === 200) {
         console.log("OrderId sent successfully");
         setUserInfo(response?.data?.result?.data?.customer_id)
-        console.log(userInfo)
       } else {
         console.error("Failed to send the orderId");
       }
@@ -73,6 +72,9 @@ const FinalConfirm = () => {
       console.error("Error:", error);
     }
   };
+
+  console.log(userInfo)
+
 
   useEffect(() => {
     postOrderId();
