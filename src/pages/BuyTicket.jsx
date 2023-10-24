@@ -71,7 +71,7 @@ const BuyTicket = () => {
   useEffect(() => {
     const fetchTicketData = async () => {
       try {
-        const response = await axios.get("http://test.api.ozzy.today/tickets");
+        const response = await axios.get("https://test.api.ozzy.today/tickets");
         console.log(response);
         setTicketsData(response?.data?.result?.data);
       } catch (error) {
@@ -86,7 +86,7 @@ const BuyTicket = () => {
 
     try {
       const response = await axios.post(
-        "http://test.api.ozzy.today/user",
+        "https://test.api.ozzy.today/user",
         formData
       );
       console.log(response);
