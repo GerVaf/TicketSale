@@ -64,7 +64,7 @@ const FinalConfirm = () => {
       console.log(response);
       if (response.status === 200) {
         console.log("OrderId sent successfully");
-        setUserInfo(response?.result?.data?.customer_id)
+        setUserInfo(response?.data?.result?.data?.customer_id)
         console.log(userInfo)
       } else {
         console.error("Failed to send the orderId");
