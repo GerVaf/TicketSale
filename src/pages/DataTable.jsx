@@ -20,7 +20,7 @@ const DataTable = ({ refresh, setRefresh }) => {
       try {
         const response = await axios.get("https://api.ozzy.today/tickets");
 
-        console.log(response);
+        // console.log(response);
         setTicket(response?.data?.result?.data);
       } catch (error) {
         console.log(error);
