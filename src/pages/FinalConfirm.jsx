@@ -2,6 +2,13 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const FinalConfirm = () => {
+  const getUrlParam = new URLSearchParams(window.location.search);
+
+  console.log(getUrlParam.get("merchantOrderId"));
+  console.log(getUrlParam.get("state"));
+
+  console.log(getUrlParam.get("query"));
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
