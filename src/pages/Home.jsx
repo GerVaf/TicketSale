@@ -7,7 +7,12 @@ import {
 import poster from "../assets/poster.jpg";
 import bgCard2 from "../assets/bgCard2.png";
 import bgCardGA from "../assets/bgCardGA.png";
-import floorplan from "../assets/soldOut.png";
+import tablePlan from "../assets/tablePlan.svg";
+import kbzpay from "../assets/kbzpay.webp";
+import kpayQr from "../assets/kpayQr.png";
+import apayQr from "../assets/apayQr.jpg";
+import ayabank from "../assets/ayabank.png";
+import ayapay from "../assets/ayapay.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -17,6 +22,7 @@ import img1 from "../assets/halloween ritual_table packages_1.jpg";
 import img2 from "../assets/halloween ritual_table packages_2.jpg";
 import img3 from "../assets/halloween ritual_table packages_3.jpg";
 import img4 from "../assets/halloween ritual_table packages_cv.jpg";
+import img5 from "../assets/gaTicket.png";
 const Home = () => {
   const [data, setData] = useState();
   const dispatch = useDispatch();
@@ -25,9 +31,8 @@ const Home = () => {
   const [sectionStates, setSectionStates] = useState({
     packages: false,
     tickets: false,
-    floorPlan: false,
+    tablePlan: false,
   });
-  console.log(sectionStates.packages);
 
   const toggleImages = (section) => {
     setSectionStates((prevStates) => ({
@@ -51,10 +56,10 @@ const Home = () => {
   return (
     <div className="flex flex-col gap-5">
       {/* Hero Image */}
-      <div onClick={() => nav("/packages")} className="aspect-auto">
+      <div className="aspect-auto">
         <img className="h-full w-full" src={poster} />
       </div>
-      
+
       {/* Packages Section */}
       <div className="flex flex-col gap-5">
         <h1 className="font-bold text-5xl md:text-8xl text-red-800 text-center">
@@ -73,6 +78,7 @@ const Home = () => {
           }`}
         >
           {/* images */}
+          <img src={img5} alt="" className="" />
           <img src={img4} alt="" className="" />
           <img src={img1} alt="" className="" />
           <img src={img2} alt="" className="" />
@@ -101,9 +107,6 @@ const Home = () => {
             return (
               <div
                 key={el?._id}
-                onClick={() => {
-                  dispatch(detail(el)), nav("/form-submit");
-                }}
                 className="rounded overflow-hidden lg:w-2/6 p-5"
               >
                 {/* Image */}
@@ -166,17 +169,17 @@ const Home = () => {
         </h1>
         <button
           className="w-full px-5 py-2 bg-red-700 text-white font-bold text-lg flex items-center justify-center gap-3"
-          onClick={() => toggleImages("floorPlan")}
+          onClick={() => toggleImages("tablePlan")}
         >
           Click Here To See <BsFillArrowDownCircleFill />
         </button>
         <div
           className={`px-3 scrollbar-none overflow-y-scroll transition-all duration-500 flex justify-center items-center ${
-            sectionStates.floorPlan ? "h-[300px] lg:h-screen" : "h-0"
+            sectionStates.tablePlan ? "h-[300px] lg:h-screen" : "h-0"
           }`}
         >
           <div className="w-full lg:w-[75%] border border-orange-500">
-            <img className="w-full h-full" src={floorplan} />
+            <img className="w-full h-full" src={tablePlan} />
           </div>
         </div>
       </div>
@@ -188,22 +191,57 @@ const Home = () => {
         </h1>
         <button
           className="w-full px-5 py-2 bg-red-700 text-white font-bold text-lg flex items-center justify-center gap-3"
-          onClick={() => nav("/payments")}
+          onClick={() => toggleImages("payments")}
         >
-          Click Here To See <BsFillArrowRightCircleFill />
+          Click Here To See <BsFillArrowDownCircleFill />
         </button>
+        <div
+          className={`rounded mx-1 overflow-y-scroll scrollbar-none transition-all duration-500 ${
+            sectionStates.payments ? "h-[750px] lg:h-[350px]" : "h-0"
+          }`}
+        >
+          <div className="grid grid-cols-12 gap-5 w-full px-3">
+            <div className="col-span-12 lg:col-span-4 p-5 bg-slate-100 rounded flex flex-col gap-3 items-center">
+              {/* Image */}
+              <img src={ayabank} alt="" className="h-[100px] aspect-auto" />
+              {/* Header */}
+              <h1>AYA Account</h1>
+              <p>20009182392</p>
+            </div>
+            <div className="col-span-12 lg:col-span-4 p-5 bg-slate-100 rounded flex justify-around gap-5 items-center">
+              <div className="text-center">
+                {/* Image */}
+                <img src={ayapay} alt="" className="h-[100px] aspect-auto" />
+                {/* Header */}
+                <p>09788343932</p>
+              </div>
+              <div>
+                <img src={apayQr} alt="" className="w-48 h-48" />
+              </div>
+            </div>
+            <div className="col-span-12 lg:col-span-4 p-5 bg-slate-100 rounded flex justify-around gap-3 items-center">
+              <div className="text-center">
+                {/* Image */}
+                <img src={kbzpay} alt="" className="h-[100px] aspect-auto" />
+                {/* Header */}
+                <h1>KBZ pay</h1>
+                <p>09788343932</p>
+              </div>
+              <div>
+                <img src={kpayQr} alt="" className="w-48 h-48" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Confirmation */}
-      <div className="flex flex-col gap-5">
-        <h1 className="font-bold text-5xl md:text-8xl text-red-800 text-center">
-          Confirmation
-        </h1>
+      <div className="flex flex-col items-center gap-5">
         <button
-          className="w-full px-5 py-2 bg-red-700 text-white font-bold text-lg flex items-center justify-center gap-3"
-          onClick={() => nav("/")}
+          className="px-8 py-5 rounded bg-red-700 text-white font-bold text-lg flex items-center justify-center gap-3 hover:bg-red-900"
+          onClick={() => nav("/paywithdinger")}
         >
-          Click Here To See <BsFillArrowRightCircleFill />
+          Click Here To Buy Tickets <BsFillArrowRightCircleFill />
         </button>
       </div>
 
