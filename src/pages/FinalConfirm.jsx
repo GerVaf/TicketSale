@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FinalConfirm = () => {
-  const [userInfo,setUserInfo] = useState({})
+  const nav = useNavigate();
+  const [userInfo, setUserInfo] = useState({});
   const getUrlParam = new URLSearchParams(window.location.search);
 
   const orderId = getUrlParam.get("merchantOrderId");
@@ -12,14 +14,6 @@ const FinalConfirm = () => {
     // email: "",
     transactionScreenshot: null,
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -43,8 +37,10 @@ const FinalConfirm = () => {
         form
       );
 
+      console.log(response);
       if (response.status === 200) {
         console.log("Data sent successfully");
+        nav("/");
       } else {
         console.error("Failed to send data to the API");
       }
@@ -52,6 +48,8 @@ const FinalConfirm = () => {
       console.error("Error:", error);
     }
   };
+
+  // for initial post id data
 
   const postOrderId = async () => {
     try {
@@ -64,7 +62,7 @@ const FinalConfirm = () => {
       console.log(response);
       if (response.status === 200) {
         console.log("OrderId sent successfully");
-        setUserInfo(response?.data?.result?.data?.customer_id)
+        setUserInfo(response?.data?.result?.data?.customer_id);
       } else {
         console.error("Failed to send the orderId");
       }
@@ -73,8 +71,7 @@ const FinalConfirm = () => {
     }
   };
 
-  console.log(userInfo)
-
+  console.log(userInfo);
 
   useEffect(() => {
     postOrderId();
@@ -88,12 +85,11 @@ const FinalConfirm = () => {
           onSubmit={handleSubmit}
           className="flex flex-col gap-5 w-full sm:gap-10"
         >
-          <div className="flex flex-col gap-2">
-            <h1>Name:</h1>
-            
+          <div className="flex flex-col gap-2 text-base">
+            <h1>Name : {userInfo?.bank_acc_name}</h1>
+            <h1>Name : {userInfo?.phone_number}</h1>
+            <h1>Name : {userInfo?.user_email}</h1>
           </div>
-
-          
 
           <div className="flex flex-col gap-2 ">
             <label className="text-lg">Transaction Screenshot:</label>
