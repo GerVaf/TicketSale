@@ -8,23 +8,30 @@ const BuyTicket = () => {
   const [ticketsData, setTicketsData] = useState([]);
   const [qty, setQty] = useState(1);
   const [extraPerson, setExtraPerson] = useState(0);
+  const [errorMessages, setErrorMessages] = useState();
+
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
+
   const data = useSelector((state) => state?.ticket?.ticketDetail);
 
-  console.log(data);
+  // console.log(data);
+
   const nav = useNavigate();
 
   // Personal, Purcahse Information form_data
   const [formData, setFormData] = useState({
     accname: "",
-    phone: "",
     email: "",
-    ticket_name: "",
+    ticketid: "",
+    phone: "",
+    package: null,
     tick_quantity: null,
     plus_person: null,
     total_price: null,
   });
+
+  console.log(formData);
 
   // Collect Input value
   const handleChange = (e) => {
@@ -37,6 +44,9 @@ const BuyTicket = () => {
     } else if (name === "extraPerson") {
       // Handle extraPerson change
       setExtraPerson(newValue);
+    } else if (name === "package") {
+      // Handle radio button selection
+      setFormData({ ...formData, [name]: parseInt(newValue) });
     } else {
       setFormData({ ...formData, [name]: newValue });
     }
@@ -61,7 +71,7 @@ const BuyTicket = () => {
   useEffect(() => {
     const fetchTicketData = async () => {
       try {
-        const response = await axios.get("https://api.ozzy.today/tickets");
+        const response = await axios.get("http://test.api.ozzy.today/tickets");
         console.log(response);
         setTicketsData(response?.data?.result?.data);
       } catch (error) {
@@ -71,11 +81,52 @@ const BuyTicket = () => {
     fetchTicketData();
   }, []);
 
+  const dataSubmit = async () => {
+    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        "http://test.api.ozzy.today/user",
+        formData
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        // Handle a successful API response here
+        console.log("Data sent successfully");
+        if (response?.data?.result?.data) {
+          location.href = response?.data?.result?.data;
+        }
+      } else {
+        // Handle API errors here
+        console.error("Failed to send data to the API");
+      }
+      if (response?.data?.status === 400) {
+        setErrorMessages(response?.data?.err);
+      }
+    } catch (error) {
+      // Handle network errors and other exceptions here
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className=" flex flex-col justify-center items-center">
       <div className="flex flex-col gap-5 bg-white w-full sm:w-[70%] p-5 sm:p-10">
         {/* Personal Information */}
         <h1 className="text-lg sm:text-4xl font-bold">Personal Information</h1>
+        {errorMessages && (
+          <div className="error-messages">
+            <h2 className="font-bold text-red-500">Error Messages:</h2>
+            <ul>
+              {Object.keys(errorMessages).map((fieldName) => (
+                <li key={fieldName} className="text-red-500">
+                  {fieldName}: {errorMessages[fieldName]}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <input
           required
           placeholder="Your name"
@@ -86,16 +137,7 @@ const BuyTicket = () => {
           value={formData.accname}
           onChange={handleChange}
         />
-        <input
-          required
-          placeholder="Your phone number"
-          className="inputForm"
-          type="tel"
-          id="phoneNumber"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-        />
+
         <input
           required
           placeholder="Your email"
@@ -106,6 +148,17 @@ const BuyTicket = () => {
           value={formData.email}
           onChange={handleChange}
         />
+        <input
+          required
+          placeholder="Your phone"
+          className="inputForm"
+          type="text"
+          id="phone"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+        />
+
         <h1 className="text-lg sm:text-4xl font-bold">Purchase Information</h1>
         {/* Ticket Type */}
         <div className="flex sm:flex-row flex-col items-center justify-between gap-2">
@@ -114,14 +167,18 @@ const BuyTicket = () => {
             {ticketsData?.map((ticket) => {
               return (
                 <div
-                  onClick={() =>
-                    dispatch(
-                      detail(ticket),
-                      setQty(1),
-                      setExtraPerson(0),
-                      (formData.total_price = ticket?.price)
-                    )
-                  }
+                  onClick={() => {
+                    setFormData({
+                      ...formData,
+                      ticketid: ticket._id, // Set the selected ticket name
+                      total_price: ticket.price, // Set the price for the selected ticket
+                    });
+                    dispatch(detail(ticket));
+                    setQty(1);
+
+                    setExtraPerson(0);
+                    formData.total_price = ticket?.price;
+                  }}
                   key={ticket?._id}
                   className={`${
                     data?.ticket_name === ticket?.ticket_name || !data
@@ -149,6 +206,50 @@ const BuyTicket = () => {
           ""
         ) : (
           <>
+            <div>
+              <h1>Choose package </h1>
+              <div className="flex flex-col gap-5">
+                <div className="flex justify-around">
+                  {" "}
+                  <div>
+                    <input
+                      type="radio"
+                      className="outline-none p-5 mr-2"
+                      id="package1"
+                      name="package"
+                      value="1"
+                      checked={formData.package === 1}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="package1">Package one</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      className="outline-none p-5 mr-2"
+                      id="package2"
+                      name="package"
+                      value="2"
+                      checked={formData.package === 2}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="package2">Package two</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      className="outline-none p-5 mr-2"
+                      id="package3"
+                      name="package"
+                      value="3"
+                      checked={formData.package === 3}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="package3">Package three</label>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="cursor-pointer flex justify-between border-white bg-gradient-to-r from-zinc-600 to-zinc-500 items-center p-5 rounded-md text-white">
               <p>Quantity : </p>
               <div className="flex items-center gap-2 text-xl bg-white justify-center text-black rounded-md overflow-hidden">
@@ -217,7 +318,7 @@ const BuyTicket = () => {
               </h1>
             </div>
             <button
-              onClick={() => nav("/final-confirm")}
+              onClick={() => dataSubmit()}
               className="bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 from-blue-500 to-blue-700 rounded-md p-3 text-white font-bold"
             >
               Buy Ticket
