@@ -67,7 +67,7 @@ const FinalConfirm = () => {
 
   return (
     <div className="bg-black flex justify-center">
-      <div className="bg-white h-[100vh] w-full lg:w-[60%] p-5 sm:p-10 flex flex-col gap-5 items-center">
+      <div className="bg-white w-full lg:w-[60%] p-5 sm:p-10 flex flex-col gap-5 items-center">
         <h2 className="text-2xl sm:text-4xl font-bold">Confirmation</h2>
         <form
           onSubmit={handleSubmit}
@@ -124,7 +124,7 @@ const FinalConfirm = () => {
                   formData.selectedOption === "get_by_email"
                     ? "bg-slate-200"
                     : "border-2"
-                } col-span-6  text-white py-3`}
+                } col-span-6   py-3`}
                 onClick={() => handleSelectOption("get_by_email")}
               >
                 Get By Email
@@ -134,7 +134,7 @@ const FinalConfirm = () => {
                   formData.selectedOption === "get_by_qr"
                     ? "bg-slate-200"
                     : "border-2"
-                } col-span-6  text-white py-3`}
+                } col-span-6   py-3`}
                 onClick={() => handleSelectOption("get_by_qr")}
               >
                 Get By QR
