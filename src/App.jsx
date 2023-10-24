@@ -6,6 +6,8 @@ import DataTable from "./pages/DataTable";
 import { Toaster } from "react-hot-toast";
 import FinalConfirm from "./pages/FinalConfirm";
 import BuyTicket from "./pages/BuyTicket";
+import Success from "./pages/Success";
+import Fail from "./pages/Fail";
 
 const App = () => {
   const [refresh, setRefresh] = useState(false);
@@ -21,6 +23,8 @@ const App = () => {
           path="/form-submit"
           element={<FormSubmit refresh={refresh} setRefresh={setRefresh} />}
         />
+        <Route path="/success" element={<Success />} />
+        <Route path="/fail" element={<Fail />} />
 
         <Route
           path="/table_7D7TW<b10999O~X~"

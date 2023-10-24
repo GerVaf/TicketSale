@@ -95,8 +95,9 @@ const BuyTicket = () => {
         // Handle a successful API response here
         console.log("Data sent successfully");
         if (response?.data?.result?.data) {
-          location.href = response?.data?.result?.data;
+          // location.href = response?.data?.result?.data;
         }
+        nav('/success')
       } else {
         // Handle API errors here
         console.error("Failed to send data to the API");
