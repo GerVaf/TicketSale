@@ -239,7 +239,7 @@ const Home = () => {
       <div className="flex flex-col items-center gap-5">
         <button
           className="px-8 py-5 rounded bg-red-700 text-white font-bold text-lg flex items-center justify-center gap-3 hover:bg-red-900"
-          onClick={() => nav("/paywithdinger")}
+          onClick={() => nav("/buy-ticket")}
         >
           Click Here To Buy Tickets <BsFillArrowRightCircleFill />
         </button>

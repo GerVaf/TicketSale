@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detail } from "../Global/TicketSlice";
+import { useNavigate } from "react-router-dom";
 
-const PayWithDinger = () => {
+const BuyTicket = () => {
   const [ticketsData, setTicketsData] = useState([]);
   const [qty, setQty] = useState(1);
   const [extraPerson, setExtraPerson] = useState(0);
@@ -12,6 +13,7 @@ const PayWithDinger = () => {
   const data = useSelector((state) => state?.ticket?.ticketDetail);
 
   console.log(data);
+  const nav = useNavigate();
 
   // Personal, Purcahse Information form_data
   const [formData, setFormData] = useState({
@@ -214,8 +216,11 @@ const PayWithDinger = () => {
                 {!data ? "0" : formData?.total_price?.toLocaleString()} MMK
               </h1>
             </div>
-            <button className="bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 from-blue-500 to-blue-700 rounded-md p-3 text-white font-bold">
-              Pay With Dinger
+            <button
+              onClick={() => nav("/final-confirm")}
+              className="bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 from-blue-500 to-blue-700 rounded-md p-3 text-white font-bold"
+            >
+              Buy Ticket
             </button>
           </>
         )}
@@ -224,4 +229,4 @@ const PayWithDinger = () => {
   );
 };
 
-export default PayWithDinger;
+export default BuyTicket;
