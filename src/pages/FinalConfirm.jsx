@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const FinalConfirm = () => {
+  const [userInfo,setUserInfo] = useState({})
   const getUrlParam = new URLSearchParams(window.location.search);
 
   const orderId = getUrlParam.get("merchantOrderId");
 
   const [formData, setFormData] = useState({
     // name: "",
-    email: "",
+    // email: "",
     transactionScreenshot: null,
   });
 
@@ -63,6 +64,8 @@ const FinalConfirm = () => {
       console.log(response);
       if (response.status === 200) {
         console.log("OrderId sent successfully");
+        setUserInfo(response?.result?.data?.customer_id)
+        console.log(userInfo)
       } else {
         console.error("Failed to send the orderId");
       }
@@ -84,26 +87,11 @@ const FinalConfirm = () => {
           className="flex flex-col gap-5 w-full sm:gap-10"
         >
           <div className="flex flex-col gap-2">
-            <label className="text-lg">Name:</label>
-            {/* <input
-              className="inputForm"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-            /> */}
+            <h1>Name:</h1>
+            
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-lg">Email:</label>
-            <input
-              className="inputForm"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-          </div>
+          
 
           <div className="flex flex-col gap-2 ">
             <label className="text-lg">Transaction Screenshot:</label>
