@@ -99,12 +99,12 @@ const DataTable = ({ refresh, setRefresh }) => {
           <p className="  w-[200px]">Name</p>
           <p className=" w-[300px]">Email</p>
           <p className="w-[130px]">Phone</p>
-          <p className="w-[400px] ">Transaction number</p>
+          <p className="w-[400px] ">Transaction Photo</p>
           <p className=" w-20">Quantity</p>
-          <p className="w-20">Payment Type</p>
+          <p className=" w-20">Extra Person</p>
           <p className=" w-[100px]">Ticket</p>
-          
-          <p className="w-32">total price</p>
+          <p className="w-32">Total price</p>
+          <p className="w-32">Payment Complete</p>
           <p className=" w-32">Time</p>
           <h1 className=" w-20">control</h1>
         </div>
@@ -120,11 +120,11 @@ const DataTable = ({ refresh, setRefresh }) => {
                   {el?.customer_id?.user_email}
                 </p>
                 <p className=" w-[130px]">{el?.customer_id?.phone_number}</p>
-                <p className="w-[400px]  text-xl tracking-widest">
-                  {el?.customer_id?.transaction_id}
+                <p className="w-[400px] flex justify-center">
+                  <img src={el?.t_image} alt="" className="h-52"/>
                 </p>
                 <p className=" w-20">{el?.quantity}</p>
-                <p className="w-20">{el?.customer_id?.payment_type}</p>
+                <p className=" w-20">{el?.ticket_id?.extra_person}</p>
                 <p className=" w-[100px]">
                   {el?.ticket_id?.ticket_name === "GA" && "GA"}
 
@@ -144,6 +144,7 @@ const DataTable = ({ refresh, setRefresh }) => {
                 </p>
                 
                 <p className="w-32">{el?.total_price}</p>
+                <p className="w-32">{el?.t_success === false ? 'No' : 'Yes'}{el?.t_success === null && 'Processing'}</p>
                 <p className=" w-32">{formattedDate(el?.createdAt)}</p>
                 <p className=" w-24">
                   {el?.sold_out ? (

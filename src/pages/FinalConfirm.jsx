@@ -33,7 +33,7 @@ const FinalConfirm = () => {
 
     try {
       const response = await axios.post(
-        "https://test.api.ozzy.today/transactions/transactionImage",
+        "https://api.ozzy.today/transactions/transactionImage",
         form
       );
 
@@ -54,7 +54,7 @@ const FinalConfirm = () => {
   const postOrderId = async () => {
     try {
       const response = await axios.post(
-        "https://test.api.ozzy.today/transactions/getOdUser",
+        "https://api.ozzy.today/transactions/getOdUser",
         {
           orderId: orderId,
         }
@@ -83,21 +83,22 @@ const FinalConfirm = () => {
         <h2 className="text-2xl sm:text-4xl font-bold">Confirmation</h2>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-5 w-full sm:gap-10"
+          className="flex flex-col w-full sm:gap-5"
         >
-          <div className="flex flex-col gap-2 text-base">
-            <h1>Name : {userInfo?.bank_acc_name}</h1>
-            <h1>Name : {userInfo?.phone_number}</h1>
-            <h1>Name : {userInfo?.user_email}</h1>
+          <div className="flex flex-col gap-5 text-xl font-bold">
+            <h1 >Name : <span className="text-base font-medium">{userInfo?.bank_acc_name}</span></h1>
+            <h1>Phone : <span className="text-base font-medium">{userInfo?.phone_number}</span></h1>
+            <h1>Email : <span className="text-base font-medium">{userInfo?.user_email}</span></h1>
           </div>
 
           <div className="flex flex-col gap-2 ">
-            <label className="text-lg">Transaction Screenshot:</label>
+            <label className="text-xl font-bold">Transaction Screenshot:</label>
             <input
               className="inputForm bg-slate-200"
               type="file"
               accept=".png, .jpg, .jpeg"
               onChange={handleFileChange}
+              required
             />
           </div>
 

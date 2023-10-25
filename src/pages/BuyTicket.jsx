@@ -52,7 +52,7 @@ const BuyTicket = () => {
     }
   };
 
-  // console.log(data);
+  console.log(data);
 
   // Calculate the total price whenever qty or extraPerson changes
   useEffect(() => {
@@ -71,7 +71,7 @@ const BuyTicket = () => {
   useEffect(() => {
     const fetchTicketData = async () => {
       try {
-        const response = await axios.get("https://test.api.ozzy.today/tickets");
+        const response = await axios.get("https://api.ozzy.today/tickets");
         console.log(response);
         setTicketsData(response?.data?.result?.data);
       } catch (error) {
@@ -86,7 +86,7 @@ const BuyTicket = () => {
 
     try {
       const response = await axios.post(
-        "https://test.api.ozzy.today/user",
+        "https://api.ozzy.today/user",
         formData
       );
       console.log(response);
@@ -111,23 +111,13 @@ const BuyTicket = () => {
     }
   };
 
+  console.log(errorMessages);
   return (
     <div className=" flex flex-col justify-center items-center">
       <div className="flex flex-col gap-5 bg-white w-full sm:w-[70%] p-5 sm:p-10">
         {/* Personal Information */}
         <h1 className="text-lg sm:text-4xl font-bold">Personal Information</h1>
-        {errorMessages && (
-          <div className="error-messages">
-            <h2 className="font-bold text-red-500">Error Messages:</h2>
-            <ul>
-              {Object.keys(errorMessages).map((fieldName) => (
-                <li key={fieldName} className="text-red-500">
-                  {fieldName}: {errorMessages[fieldName]}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+
         <input
           required
           placeholder="Your name"
@@ -207,50 +197,58 @@ const BuyTicket = () => {
           ""
         ) : (
           <>
-            <div>
-              <h1>Choose package </h1>
-              <div className="flex flex-col gap-5">
-                <div className="flex justify-around">
-                  {" "}
-                  <div>
-                    <input
-                      type="radio"
-                      className="outline-none p-5 mr-2"
-                      id="package1"
-                      name="package"
-                      value="1"
-                      checked={formData.package === 1}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="package1">Package one</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      className="outline-none p-5 mr-2"
-                      id="package2"
-                      name="package"
-                      value="2"
-                      checked={formData.package === 2}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="package2">Package two</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      className="outline-none p-5 mr-2"
-                      id="package3"
-                      name="package"
-                      value="3"
-                      checked={formData.package === 3}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="package3">Package three</label>
+            {data?.ticket_name === "GA" ? null : (
+              <div className="flex justify-between items-center">
+                <h1 className="text-lg font-bold mb-3">Choose package </h1>
+                <div className="flex flex-col gap-5">
+                  <div className="flex items-center gap-5">
+                    <div className="bg-slate-200 p-3 rounded font-semibold flex items-center">
+                      <input
+                        type="radio"
+                        className="outline-none p-5 mr-2"
+                        id="package1"
+                        name="package"
+                        value="1"
+                        checked={formData.package === 1}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="package1">Package one</label>
+                    </div>
+                    <div className="bg-slate-200 p-3 rounded font-semibold flex items-center">
+                      <input
+                        type="radio"
+                        className="outline-none p-5 mr-2"
+                        id="package2"
+                        name="package"
+                        value="2"
+                        checked={formData.package === 2}
+                        onChange={handleChange}
+                        required
+                      />
+                      <label htmlFor="package2">Package two</label>
+                    </div>
+                    {data?.ticket_name === "VVIP" ||
+                    data?.ticket_name === "VVIP_S1" ||
+                    data?.ticket_name === "VVIP_S2" ? null : (
+                      <div className="bg-slate-200 p-3 rounded font-semibold flex items-center">
+                        <input
+                          type="radio"
+                          className="outline-none p-5 mr-2"
+                          id="package3"
+                          name="package"
+                          value="3"
+                          checked={formData.package === 3}
+                          onChange={handleChange}
+                          required
+                        />
+                        <label htmlFor="package3">Package three</label>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
+            )}
             <div className="cursor-pointer flex justify-between border-white bg-gradient-to-r from-zinc-600 to-zinc-500 items-center p-5 rounded-md text-white">
               <p>Quantity : </p>
               <div className="flex items-center gap-2 text-xl bg-white justify-center text-black rounded-md overflow-hidden">
@@ -319,11 +317,30 @@ const BuyTicket = () => {
               </h1>
             </div>
             <button
-              onClick={() => dataSubmit()}
+              disabled
+              // onClick={() => dataSubmit()}
               className="bg-gradient-to-r hover:from-blue-400 hover:to-blue-600 from-blue-500 to-blue-700 rounded-md p-3 text-white font-bold"
             >
               Buy Ticket
             </button>
+            {errorMessages && (
+              <div className="error-messages bg-slate-100 p-5 rounded">
+                <h2 className="font-bold text-red-500">Error Messages:</h2>
+                <ul>
+                  {Object.keys(errorMessages).map((fieldName) => (
+                    <li key={fieldName} className="text-red-500">
+                      {fieldName === "package" ? (
+                        'package: "package" is required!'
+                      ) : (
+                        <>
+                          {fieldName}: {errorMessages[fieldName]}
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </>
         )}
       </div>
